@@ -1,15 +1,14 @@
+# frozen_string_literal: true
+
 def stock_picker(stocks)
-  buy = 0
-  sell = 0
-  profit = 0
+  buy = sell = profit = 0
   stocks.each_with_index do |stock, day|
-    stocks.drop(day+1).each_with_index do |future_stock, future_day|
-      if (future_stock - stock) <= profit
-        next
-      end
+    stocks.drop(day + 1).each_with_index do |future_stock, future_day|
+      next if (future_stock - stock) <= profit
+
       profit = future_stock - stock
       buy = day
-      sell = future_day + day + 1 
+      sell = future_day + day + 1
     end
   end
   [buy, sell]
